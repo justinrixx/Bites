@@ -1,12 +1,17 @@
 package com.gmail.rixx.justin.bites;
 
-import android.support.v7.app.ActionBarActivity;
+import android.content.Context;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.TextView;
 
 
 public class MainActivity extends ActionBarActivity {
+
+    private static final String KEY_COUNT = "count";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,5 +40,20 @@ public class MainActivity extends ActionBarActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public void save(View view) {
+        getPreferences(Context.MODE_PRIVATE).edit().putInt(KEY_COUNT, Integer.parseInt((
+                (TextView)findViewById(R.id.textview)).getText().toString())).apply();
+    }
+
+    public void advance(View view) {
+        TextView t = (TextView) findViewById(R.id.textview);
+        t.setText(String.valueOf(Integer.parseInt(t.getText().toString()) + 1));
+    }
+
+    public void load(View view) {
+        ((TextView)findViewById(R.id.textview)).setText(
+                String.valueOf(getPreferences(Context.MODE_PRIVATE).getInt(KEY_COUNT, 0)));
     }
 }
